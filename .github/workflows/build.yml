@@ -1,1 +1,32 @@
+name: Build Uttarakhand Transit
 
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: emscripten/emsdk:latest
+
+    steps:
+      - name: Checkout project
+        uses: actions/checkout@v4
+
+      - name: Compile C++ using Emscripten
+        run: |
+          em++ main.cpp -o main.js \
+            --bind \
+            --preload-file stations.txt \
+            --preload-file vehicles.txt
+
+      - name: Save compiled files
+        uses: actions/upload-artifact@v4
+        with:
+          name: compiled-project
+          path: |
+            main.js
+            main.wasm
+            main.data
