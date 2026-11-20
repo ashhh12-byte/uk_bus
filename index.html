@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#102b35">
+  <meta name="description" content="Explore nearby bus stations and scheduled buses around Dehradun, Uttarakhand.">
+  <title>Uttarakhand Transit | Dehradun Bus Tracker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" defer></script>
+  <script>var Module={onRuntimeInitialized:function(){window.cppReady=true;window.dispatchEvent(new Event('cpp-ready'));}};</script>
+  <script src="main.js" defer></script>
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <div class="page-shell">
+    <header class="site-header">
+      <a class="brand" href="#home" aria-label="Uttarakhand Transit home">
+        <span class="brand-mark">UT</span>
+        <span class="brand-copy"><strong>Uttarakhand<span>Transit</span></strong><small>DEHRADUN BUS TRACKER</small></span>
+      </a>
+      <nav class="main-nav" aria-label="Main navigation">
+        <a class="active" href="#home">Home</a>
+        <a href="#tracker">Live tracker</a>
+        <a href="#explore">Explore Uttarakhand</a>
+      </nav>
+      <a class="header-pill" href="#tracker"><span class="pulse-dot"></span> Track a bus</a>
+    </header>
+
+    <main id="home">
+      <section class="hero">
+        <div class="hero-image" role="img" aria-label="Mountain road through the Himalayas"></div>
+        <div class="hero-shade"></div>
+        <div class="hero-content">
+          <div class="eyebrow"><span class="eyebrow-line"></span> YOUR JOURNEY, CLOSER TO THE HILLS</div>
+          <h1>Every road leads<br>to <em>somewhere</em> beautiful.</h1>
+          <p>Find nearby bus stations, check scheduled passing times and make your way around Dehradun with confidence.</p>
+          <a class="hero-cta" href="#tracker">Find buses near me <span>↗</span></a>
+          <div class="hero-footnote"><span class="mini-mountain">⌁</span> Dehradun · Uttarakhand · India</div>
+        </div>
+        <div class="hero-stamp"><span>EXPLORE</span><strong>उत्तराखंड</strong><small>THE LAND OF THE GODS</small></div>
+      </section>
+
+      <section class="intro-strip" aria-label="Project highlights">
+        <div><span class="strip-icon">⌖</span><span><b>Location-aware</b><small>Find stations around you</small></span></div>
+        <div><span class="strip-icon">◷</span><span><b>Timetable based</b><small>See upcoming bus times</small></span></div>
+        <div><span class="strip-icon">⌁</span><span><b>Built for Dehradun</b><small>Local routes and stops</small></span></div>
+      </section>
+
+      <section class="tracker-section" id="tracker">
+        <div class="section-heading">
+          <div><div class="eyebrow dark-eyebrow">PLAN YOUR NEXT RIDE</div><h2>Find your <em>nearest</em> bus.</h2></div>
+          <p>Allow location access to discover the closest listed stations and their next scheduled buses.</p>
+        </div>
+
+        <div class="tracker-grid">
+          <section class="location-card">
+            <div class="card-topline"><span class="card-icon">⌖</span><span class="live-label"><i></i> LOCATION SERVICES</span></div>
+            <h3>Your location</h3>
+            <p class="card-description">We'll use your device location to sort nearby bus stations by distance.</p>
+            <div class="status-box"><span class="status-indicator"></span><span id="status" role="status">Waiting for C++ WebAssembly module...</span></div>
+            <div class="coordinate-grid">
+              <div><small>LATITUDE</small><b id="latitude">Not available</b></div>
+              <div><small>LONGITUDE</small><b id="longitude">Not available</b></div>
+            </div>
+            <div class="clock-row"><span>Local device time</span><b id="clock">--:--:--</b></div>
+            <div class="button-stack">
+              <button id="retryBtn" class="primary-btn" disabled><span>⌖</span> Get / Refresh GPS Location</button>
+              <button id="findBtn" class="dark-btn" disabled>Find Nearest Stops &amp; Buses <span>→</span></button>
+              <button id="demoBtn" class="text-btn" disabled>Use Graphic Era demo location</button>
+            </div>
+            <div class="privacy-note"><span>◈</span> Your coordinates are used locally in this browser session.</div>
+          </section>
+
+          <section class="results-card">
+            <div class="results-heading">
+              <div><div class="eyebrow dark-eyebrow">AROUND YOU</div><h3>Nearby stations</h3></div>
+              <span class="result-count" id="resultCount">0 STATIONS</span>
+            </div>
+            <p class="results-subtitle">The closest stations appear first. Bus schedules are compared with your device's current time.</p>
+            <div class="results-empty-art" id="results">
+              <div class="empty-illustration"><span class="road-line"></span><span class="bus-emoji">🚌</span><span class="pin-emoji">⌖</span></div>
+              <b>Your next ride starts here.</b>
+              <p>Get your location, then find the nearest stations and scheduled buses.</p>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <section class="map-section" id="station-map">
+        <div class="section-heading">
+          <div><div class="eyebrow dark-eyebrow">EXPLORE THE NETWORK</div><h2>Stations on the <em>map.</em></h2></div>
+          <p>Explore listed bus stops around Dehradun. Select a marker to view its station details.</p>
+        </div>
+        <div class="map-card">
+          <div class="map-toolbar">
+            <div><span class="map-live-dot"></span><b>Dehradun station map</b><small>Station locations are approximate reference pins</small></div>
+            <button type="button" id="mapLocateBtn" class="map-locate-btn">⌖ Show my location</button>
+          </div>
+          <div id="stationMap" role="application" aria-label="Interactive map showing listed Dehradun bus stations"></div>
+          <div class="map-legend">
+            <span><i class="legend-station"></i> Listed bus station</span>
+            <span><i class="legend-user"></i> Your location</span>
+            <span class="map-credit">Map data © OpenStreetMap contributors</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="explore-section" id="explore">
+        <div class="section-heading explore-heading">
+          <div><div class="eyebrow dark-eyebrow">A LITTLE INSPIRATION</div><h2>Made for the <em>mountain roads.</em></h2></div>
+          <p>From city streets to winding Himalayan highways, discover the spirit of travel in Uttarakhand.</p>
+        </div>
+        <div class="destination-grid">
+          <article class="destination-card destination-large">
+            <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1100&q=85" alt="Snow-covered Himalayan mountain peaks" loading="lazy">
+            <div class="destination-overlay"><span>THE HIMALAYAS</span><h3>Take the scenic route.</h3></div>
+          </article>
+          <article class="destination-card">
+            <img src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=900&q=85" alt="Passenger bus ready for a journey" loading="lazy">
+            <div class="destination-overlay"><span>ON THE ROAD</span><h3>Everyday journeys.</h3></div>
+          </article>
+          <article class="destination-card">
+            <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=85" alt="Winding road through a green mountain landscape" loading="lazy">
+            <div class="destination-overlay"><span>UTTARAKHAND</span><h3>Explore a little more.</h3></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="accuracy-note"><span class="note-icon">i</span><div><b>A note about schedule accuracy</b><p>Station coordinates may be approximate or demo data. Times in <code>vehicles.txt</code> are illustrative sample schedules, not verified official timetables or live GPS positions. “Next scheduled” means predicted from the timetable, not confirmed bus arrival. Please verify local timings before travelling.</p></div></section>
+    </main>
+
+    <footer class="site-footer"><a class="footer-brand" href="#home">UT <span>Uttarakhand Transit</span></a><span>Designed for journeys across Dehradun, Uttarakhand.</span><span class="footer-tech">HTML · CSS · JavaScript · C++ WebAssembly</span></footer>
+  </div>
+</body>
+</html>

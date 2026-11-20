@@ -1,0 +1,8 @@
+# id,name,latitude,longitude,data_status
+# Coordinates are approximate reference pins; verify exact passenger boarding point.
+GEU,Graphic Era University,30.268681,77.993404,Approximate reference location
+ISBT,ISBT Dehradun,30.2878207,77.9980253,Approximate reference location
+LALKAMMA,Lal Kamma Chowk,30.273000,77.982000,DEMO coordinate - verify exact stop
+CHANDRABANI,Chandrabani,30.286000,77.971000,DEMO coordinate - verify exact stop
+PREMNAGAR,Prem Nagar,30.354000,77.963000,DEMO coordinate - verify exact stop
+BALLUPUR,Ballupur,30.336000,78.005000,DEMO coordinate - verify exact stop
